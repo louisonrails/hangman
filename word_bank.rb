@@ -11,18 +11,8 @@ class WordBank
     end
   end
 
-  def display_word(range)
-    puts @game_words[range]
-  end
-
   def random_word
     random_number = rand(@game_words.length)
-    puts @game_words[random_number]
+    @game_words[random_number]
   end
 end
-
-word = WordBank.new('20k.txt')
-word.display_word(30)
-word.display_word(25)
-word.random_word
-word.random_word
