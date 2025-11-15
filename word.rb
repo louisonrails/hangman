@@ -2,9 +2,16 @@
 
 require_relative 'word_bank'
 
+# The `Word` class represents a single word that the player must guess in the Hangman game.
+# It is responsible for handling the word's characters, checking if a guessed letter is
+# part of the word, revealing letters as they are guessed correctly, and displaying
+# the current progress of the word (masked and revealed letters).
 class Word
-  def initialize(word)
-    @word = word
+  attr_reader :word
+
+  def initialize
+    @word_bank = WordBank.new('20k.txt')
+    @word = @word_bank.random_word
     @word_letters = @word.chars
     @revealed_letters = Array.new(@word_letters.length, '_')
   end
@@ -28,16 +35,11 @@ class Word
     true
   end
 
+  def complete?
+    @revealed_letters == @word_letters
+  end
+
   def display_word
-    puts @word_letters.join(' ')
     puts @revealed_letters.join(' ')
   end
 end
-
-word_bank = WordBank.new('20k.txt')
-secret_word = word_bank.random_word
-word = Word.new(secret_word)
-word.display_word
-puts word.includes?('a')
-word.reveal('a')
-word.display_word
